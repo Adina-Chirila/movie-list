@@ -9,10 +9,12 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Container maxWidth="md" style={{ border: "1px solid red" }}>
+      <Container maxWidth="md">
         <Search />
-        <MovieList />
       </Container>
+      {/* <Container maxWidth="md">
+        <MovieList />
+      </Container> */}
     </div>
   );
 }
