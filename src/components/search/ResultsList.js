@@ -1,49 +1,44 @@
 import React from "react";
 import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
+  GridList,
+  GridListTile,
+  GridListTileBar,
   IconButton,
-  Grid,
 } from "@material-ui/core";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import posterPlaceholder from "./posterPlaceholder.jpg";
-
-import AddIcon from "@material-ui/icons/Add";
-
 import styles from "./ResultsList.module.css";
 
 const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w200${imageUri}`;
 
 const ResultsList = (props) => (
-  <React.Fragment>
+  <GridList cellHeight={300}>
     {props.movies.map((item) => (
-      <Grid container xs={12}>
-        <Grid item xs={2}>
-          <img
-            className={styles.poster}
-            alt=""
-            src={
-              item.poster_path === null
-                ? posterPlaceholder
-                : getPosterUrl(item.poster_path)
-            }
-          />
-        </Grid>
-        <Grid item xs={3}>
-          {item.original_title}
-        </Grid>
-        <Grid item xs={2}>
-          {item.release_date}
-        </Grid>
-        <Grid item xs={2}>
-          <IconButton onClick={() => props.onAdd(item)}>
-            <AddIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
+      <GridListTile>
+        <img
+          className={styles.poster}
+          alt={item.original_title}
+          src={
+            item.poster_path === null
+              ? posterPlaceholder
+              : getPosterUrl(item.poster_path)
+          }
+        />
+        <GridListTileBar
+          title={item.original_title}
+          subtitle={<span>Release date: {item.release_date}</span>}
+          actionIcon={
+            <IconButton
+              aria-label={`add movie ${item.original_title} to favorites`}
+              onClick={() => props.onAdd(item)}
+            >
+              <FavoriteBorderIcon className={styles.addFavorite} />
+            </IconButton>
+          }
+        ></GridListTileBar>
+      </GridListTile>
     ))}
-  </React.Fragment>
+  </GridList>
 );
 
 export default ResultsList;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { TextField, Button, Container } from "@material-ui/core";
+import { TextField, IconButton, Container } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import ResultsList from "./ResultsList";
 import Settings from "../../config/Settings";
@@ -56,18 +56,14 @@ class Search extends Component {
             value={this.state.searchTerm}
             onChange={this.handleChange}
           />
-          <Button
-            variant="outlined"
-            color="normal"
-            startIcon={<SearchIcon />}
-            onClick={this.handleSearch}
-          >
-            Search
-          </Button>
+          <IconButton variant="outlined" onClick={this.handleSearch}>
+            <SearchIcon />
+          </IconButton>
         </Container>
         {this.state.searchResults.length > 0 && (
           <Container className={styles.results}>
             <ResultsList
+              // install uuid to provide unique key
               movies={this.state.searchResults}
               onAdd={this.handleAdd}
             />

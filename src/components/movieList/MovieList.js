@@ -6,6 +6,7 @@ class MovieList extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Typography variant="h3">Favorite movies</Typography>
         {this.props.savedMovies.length > 0
           ? this.props.savedMovies.map((item) => <MovieCard movie={item} />)
           : "Search for a movie and add it to your list."}

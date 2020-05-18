@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import Header from "./shared/header/Header";
 import { Grid, Container } from "@material-ui/core";
 import MovieList from "./components/movieList/MovieList";
