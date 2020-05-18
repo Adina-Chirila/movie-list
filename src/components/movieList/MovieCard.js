@@ -5,21 +5,21 @@ import {
   CardContent,
   CardMedia,
   CardActions,
-  Typography,
   Button,
+  Typography,
 } from "@material-ui/core";
 
-const MovieCard = () => {
+const MovieCard = (props) => {
+  const { movie } = props;
   return (
     <Card>
       <CardActionArea>
         <CardContent>
-          <CardMedia image="" description="movie poster">
-            <Typography variant="h5">Movie Title</Typography>
-            <Typography variant="body2" color="text">
-              Movie Title
-            </Typography>
-          </CardMedia>
+          <CardMedia image="" description="movie poster"></CardMedia>
+          <Typography variant="h5">{movie.original_title}</Typography>
+          <Typography variant="body2" color="textSecondary">
+            {movie.release_date}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
