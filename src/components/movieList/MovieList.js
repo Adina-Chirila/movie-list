@@ -7,8 +7,10 @@ class MovieList extends React.Component {
     return (
       <React.Fragment>
         {this.props.savedMovies.length > 0
-          ? this.props.savedMovies.map((item) => <MovieCard movie={item} />)
-          : "Search for a movie and add it to your list."}
+          ? this.props.savedMovies.map((item) => (
+              <MovieCard movie={item} changeRating={this.props.changeRating} />
+            ))
+          : "Add something"}
       </React.Fragment>
     );
   }

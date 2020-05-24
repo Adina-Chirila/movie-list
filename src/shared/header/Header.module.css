@@ -1,3 +1,11 @@
 .identityIcon {
   letter-spacing: 2px;
 }
+
+.header {
+  display: flex;
+}
+
+.login {
+  justify-content: flex-end;
+}
