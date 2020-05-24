@@ -7,10 +7,13 @@ import {
   CardActions,
   Button,
   Typography,
+  Box,
 } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
 
 const MovieCard = (props) => {
-  const { movie } = props;
+  const { movie, deleteMovie } = props;
+  const [value, setValue] = React.useState(0);
   return (
     <>
       <Card>
@@ -23,8 +26,21 @@ const MovieCard = (props) => {
             </Typography>
           </CardContent>
         </CardActionArea>
+        <Box component="fieldset" mb={3} borderColor="transparent">
+          <Rating
+            name="simple-controlled"
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
+        </Box>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => deleteMovie(movie)}
+          >
             Delete
           </Button>
         </CardActions>

@@ -5,14 +5,14 @@ import {
   GridListTileBar,
   IconButton,
 } from "@material-ui/core";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import posterPlaceholder from "./posterPlaceholder.jpg";
 import styles from "./ResultsList.module.css";
 
-const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w200${imageUri}`;
+const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w400${imageUri}`;
 
 const ResultsList = (props) => (
-  <GridList cellHeight={300}>
+  <GridList cellHeight={450} cols={4}>
     {props.movies.map((item) => (
       <GridListTile>
         <img
@@ -32,7 +32,7 @@ const ResultsList = (props) => (
               aria-label={`add movie ${item.original_title} to favorites`}
               onClick={() => props.onAdd(item)}
             >
-              <FavoriteBorderIcon className={styles.addFavorite} />
+              <FavoriteIcon className={styles.addFavorite} />
             </IconButton>
           }
         ></GridListTileBar>

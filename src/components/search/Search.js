@@ -13,20 +13,14 @@ class Search extends Component {
   };
 
   handleSearch = () => {
-    console.log(this.state.searchTerm);
     const { API_URL, API_KEY } = Settings;
     // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=Terminator
     const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`;
 
     axios.get(url).then((response) => {
-      this.setState(
-        {
-          searchResults: response.data.results,
-        },
-        () => {
-          console.log(this.state.searchResults);
-        }
-      );
+      this.setState({
+        searchResults: response.data.results,
+      });
     });
   };
 

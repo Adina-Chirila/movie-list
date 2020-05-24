@@ -8,7 +8,13 @@ class MovieList extends React.Component {
       <React.Fragment>
         <Typography variant="h3">Favorite movies</Typography>
         {this.props.savedMovies.length > 0
-          ? this.props.savedMovies.map((item) => <MovieCard movie={item} />)
+          ? this.props.savedMovies.map((item) => (
+              <MovieCard
+                movie={item}
+                deleteMovie={this.props.deleteMovie}
+                key={item.id}
+              />
+            ))
           : "Search for a movie and add it to your list."}
       </React.Fragment>
     );

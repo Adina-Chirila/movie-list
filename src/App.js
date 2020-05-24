@@ -40,15 +40,35 @@ class App extends React.Component {
     });
   };
 
+  updateFavMovies = (newMovies) => {
+    this.setState({ savedMovies: newMovies });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        savedMovies: newMovies,
+      })
+    );
+  };
+
+  deleteMovie = (favMovie) => {
+    const result = this.state.savedMovies.filter(
+      (item) => item.id !== favMovie.id
+    );
+    this.updateFavMovies(result);
+  };
+
   render() {
     return (
       <div className="App">
         <Header />
-        <Container maxWidth="md">
+        <Container maxWidth="xl">
           <Search onMovieAdd={this.onMovieAdd} />
         </Container>
-        <Container maxWidth="md">
-          <MovieList savedMovies={this.state.savedMovies} />
+        <Container maxWidth="lg">
+          <MovieList
+            savedMovies={this.state.savedMovies}
+            deleteMovie={this.deleteMovie}
+          />
         </Container>
       </div>
     );
