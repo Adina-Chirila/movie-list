@@ -8,31 +8,47 @@ import {
   Button,
   Typography,
   Box,
+  Paper,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
+import styles from "./MovieCard.module.css";
+import posterPlaceholder from "../search/posterPlaceholder.jpg";
+
+const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w400${imageUri}`;
 
 const MovieCard = (props) => {
-  const { movie, deleteMovie } = props;
-  const [value, setValue] = React.useState(0);
+  const { movie, deleteMovie, rating, ratingHandler } = props;
+  // const [value, setValue] = React.useState(0);
   return (
-    <>
+    <Paper className={styles.cardPaper}>
       <Card>
         <CardActionArea>
           <CardContent>
-            <CardMedia image="" description="movie poster"></CardMedia>
+            <CardMedia
+              style={{ width: "216px", height: "324px" }}
+              component="img"
+              image={
+                movie.poster_path === null
+                  ? posterPlaceholder
+                  : getPosterUrl(movie.poster_path)
+              }
+              description="movie poster"
+            />
             <Typography variant="h5">{movie.original_title}</Typography>
             <Typography variant="body2" color="textSecondary">
-              {movie.release_date}
+              Release date: {movie.release_date}
             </Typography>
           </CardContent>
         </CardActionArea>
         <Box component="fieldset" mb={3} borderColor="transparent">
           <Rating
             name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
+            defaultValue={0}
+            onChange={() => ratingHandler(movie)}
+
+            // onChange={(event, newValue) => {
+            //   setValue(newValue);
+            // }}
           />
         </Box>
         <CardActions>
@@ -45,7 +61,7 @@ const MovieCard = (props) => {
           </Button>
         </CardActions>
       </Card>
-    </>
+    </Paper>
   );
 };
 

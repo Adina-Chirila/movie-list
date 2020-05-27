@@ -1,3 +1,17 @@
-.identityIcon {
-  letter-spacing: 2px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accountActionItem {
+  margin: 0 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.accountActionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

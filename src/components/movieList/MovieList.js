@@ -1,22 +1,36 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Paper, IconButton } from "@material-ui/core";
 import MovieCard from "./MovieCard";
+import CloseIcon from "@material-ui/icons/Close";
+import styles from "./MovieList.module.css";
 
 class MovieList extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <Typography variant="h3">Favorite movies</Typography>
-        {this.props.savedMovies.length > 0
-          ? this.props.savedMovies.map((item) => (
+      <Paper className={styles.favoriteContainer} variant="outlined">
+        <div className={styles.favoriteMenu}>
+          <Typography variant="h3">Favorite movies</Typography>
+          <IconButton>
+            <CloseIcon onClick={this.props.closeFavorite} />
+          </IconButton>
+        </div>
+        <div className={styles.movieListContainer}>
+          {this.props.savedMovies.length > 0 ? (
+            this.props.savedMovies.map((item) => (
               <MovieCard
                 movie={item}
                 deleteMovie={this.props.deleteMovie}
                 key={item.id}
+                ratingHandler={this.props.ratingHandler}
               />
             ))
-          : "Search for a movie and add it to your list."}
-      </React.Fragment>
+          ) : (
+            <Typography variant="subtitle1">
+              Search for a movie and add it to your list.
+            </Typography>
+          )}
+        </div>
+      </Paper>
     );
   }
 }
