@@ -11,23 +11,23 @@ class Rating extends Component {
       rating: props.userRating || 0,
     };
   }
+
   render() {
     const ratings = [...Array(5)].map((item, index) => index + 1);
-    const { changeRating, userRating = 4 } = this.props;
+    const { changeRating, userRating = 3 } = this.props;
+
     return (
       <div>
         {ratings.map((item) => {
           return (
             <Icon
-              onClick={() => {
-                changeRating(item, this.props.movie);
-              }}
+              onClick={() => changeRating(item, this.props.movie)}
+              className={styles.star}
             >
-              {item <= userRating ? <StarBorderIcon /> : <StarIcon />}
+              {item <= userRating ? <StarIcon /> : <StarBorderIcon />}
             </Icon>
           );
         })}
-        <Icon>{/* <StarIcon /> */}</Icon>
       </div>
     );
   }

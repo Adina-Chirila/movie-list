@@ -10,7 +10,7 @@ class MovieList extends React.Component {
           ? this.props.savedMovies.map((item) => (
               <MovieCard movie={item} changeRating={this.props.changeRating} />
             ))
-          : "Add something"}
+          : "Search for a movie and add it to your list."}
       </React.Fragment>
     );
   }

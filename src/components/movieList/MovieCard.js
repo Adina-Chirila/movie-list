@@ -15,28 +15,27 @@ const MovieCard = (props) => {
   return (
     <Card>
       <CardActionArea>
-        <CardMedia />
-        <Typography variant="h5">{movie.original_title}</Typography>
-        <Typography variant="subtitle2">Movie description</Typography>
-        <CardContent></CardContent>
+        <CardContent>
+          <CardMedia image="" description="movie poster"></CardMedia>
+          <Typography variant="h5">{movie.original_title}</Typography>
+          <Typography variant="body2" color="textSecondary">
+            {movie.release_date}
+          </Typography>
+          <div>
+            <Rating
+              userRating={props.movie.userRating}
+              changeRating={changeRating}
+              movie={movie}
+            />
+          </div>
+        </CardContent>
       </CardActionArea>
-      <div>
-        <Rating
-          userRating={props.movie.userRating}
-          changeRating={changeRating}
-          movie={movie}
-        />
-      </div>
       <CardActions>
         <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
+          Delete
         </Button>
       </CardActions>
     </Card>
   );
 };
-
 export default MovieCard;

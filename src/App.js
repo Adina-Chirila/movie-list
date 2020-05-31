@@ -9,10 +9,11 @@ class App extends React.Component {
     savedMovies: [],
     user: null,
     userName: "",
+    showSecret: false,
   };
 
   componentDidMount() {
-    const saved = localStorage.getItem("userData");
+    const savedMovies = localStorage.getItem("userData");
     const userDetails = localStorage.getItem("userDetails");
     if (userDetails) {
       const parsedUser = JSON.parse(userDetails);
@@ -20,31 +21,32 @@ class App extends React.Component {
         user: parsedUser,
       });
     } else {
-      this.setState({
-        user: null,
-      });
+      // handle redirect to login?
     }
-    if (saved) {
+
+    if (savedMovies) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(savedMovies);
         this.setState({
           savedMovies: parsed.savedMovies,
         });
       } catch (error) {
-        console.log("App crashed");
+        console.log("App crashed check user input...");
       }
     }
   }
 
-  onAddMovie = (movie) => {
+  onMovieAdd = (movie) => {
     const movies = this.state.savedMovies;
     movies.push(movie);
+
     localStorage.setItem(
       "userData",
       JSON.stringify({
         savedMovies: movies,
       })
     );
+
     this.setState({
       savedMovies: movies,
     });
@@ -57,10 +59,12 @@ class App extends React.Component {
         userName: this.state.userName,
       })
     );
+
     this.setState({
       user: {
         userName: this.state.userName,
       },
+      userName: null,
     });
   };
 
@@ -71,12 +75,13 @@ class App extends React.Component {
     });
   };
 
-  changeRating = (rating) => {
-    console.log(rating);
+  changeRating = (rating, movie) => {
+    console.log(Object.assign({}, movie, { userRating: rating }));
   };
+
   logout = () => {
     this.setState({ user: null });
-    localStorage.removeItem("userData");
+    localStorage.removeItem("userDetails");
   };
 
   render() {
@@ -87,7 +92,10 @@ class App extends React.Component {
         {user ? (
           <React.Fragment>
             <Container maxWidth="md">
-              <Search onMovieAdd={this.onAddMovie} />
+              <Search onMovieAdd={this.onMovieAdd} />
+            </Container>
+            {this.state.showSecret && <h2>This is interactive </h2>}
+            <Container maxWidth="md">
               <MovieList
                 savedMovies={savedMovies}
                 changeRating={this.changeRating}
@@ -95,19 +103,15 @@ class App extends React.Component {
             </Container>
           </React.Fragment>
         ) : (
-          <Container maxWdith="md">
-            <h2>Hello ppl</h2>
-            <h4>What is your name</h4>
+          <Container maxWidth="md">
+            <h2>Hello stranger!</h2>
+            <h4>What is your name?</h4>
             <TextField label="Name" onChange={this.onUserChange} />
-            <Button variant="contained" onClick={this.handleAddUser} />
+            <Button variant="contained" onClick={this.handleAddUser}>
+              Save
+            </Button>
           </Container>
         )}
-        {/* <Grid container alignItems="center">
-          <Grid item xs={3} />
-          <Grid item xs={6}>
-            <Search></Search>
-          </Grid>
-        </Grid> */}
       </div>
     );
   }
