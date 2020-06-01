@@ -25,7 +25,7 @@ const MovieCard = (props) => {
             <Rating
               userRating={props.movie.userRating}
               changeRating={changeRating}
-              movie={movie}
+              movieId={movie.id}
             />
           </div>
         </CardContent>

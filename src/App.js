@@ -75,8 +75,22 @@ class App extends React.Component {
     });
   };
 
-  changeRating = (rating, movie) => {
-    console.log(Object.assign({}, movie, { userRating: rating }));
+  changeRating = (rating, movieId) => {
+    const foundIndex = this.state.savedMovies.findIndex(
+      (item) => item.id === movieId
+    );
+    const { savedMovies } = this.state;
+    const movie = savedMovies[foundIndex];
+    savedMovies[foundIndex] = Object.assign({}, movie, { userRating: rating });
+    this.setState({
+      savedMovies: savedMovies,
+    });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ savedMovies: savedMovies })
+    );
+    console.log(this.state.savedMovies[foundIndex]);
+    console.log(Object.assign({}, movieId, { userRating: rating }));
   };
 
   logout = () => {
