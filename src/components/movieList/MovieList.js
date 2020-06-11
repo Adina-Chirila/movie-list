@@ -21,7 +21,7 @@ class MovieList extends React.Component {
                 movie={item}
                 deleteMovie={this.props.deleteMovie}
                 key={item.id}
-                ratingHandler={this.props.ratingHandler}
+                changeRating={this.props.changeRating}
               />
             ))
           ) : (

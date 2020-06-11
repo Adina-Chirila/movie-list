@@ -1,22 +1,18 @@
 import React from "react";
 import "./App.css";
 import Header from "./shared/header/Header";
-import { Container, TextField, Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import MovieList from "./components/movieList/MovieList";
 import Search from "./components/search/Search";
 import LoginForm from "./components/movieList/LoginForm";
-import {
-  Input,
-  InputLabel,
-  InputAdornment,
-  FormControl,
-} from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 class App extends React.Component {
   state = {
     savedMovies: [],
     favoriteVisible: true,
+    user: null,
+    userName: "",
+    userNameError: "",
   };
 
   componentDidMount() {
@@ -67,6 +63,7 @@ class App extends React.Component {
   };
 
   handleAddUser = (event) => {
+    this.setState({ favoriteVisible: true });
     localStorage.setItem(
       "userDetails",
       JSON.stringify({
@@ -84,6 +81,8 @@ class App extends React.Component {
 
   onUserChange = (event) => {
     const { value } = event.target;
+    if (!value) {
+    }
     this.setState({
       userName: value,
     });
@@ -98,23 +97,24 @@ class App extends React.Component {
     this.setState({ favoriteVisible: !this.state.favoriteVisible });
   };
 
-  ratingHandler = (userRating, movie) => {
-    const savedMoviesWithRating = this.state.savedMovies.map(
-      (movie, userRating) => ({
-        ...movie,
-        rating: 0,
-      })
+  changeRating = (rating, movieId) => {
+    const foundIndex = this.state.savedMovies.findIndex(
+      (item) => item.id === movieId
     );
-    console.log(savedMoviesWithRating);
-    // this.setState(
-    //   { savedMovies: savedMoviesWithRating },
-    //   console.log(this.state.savedMovies)
-    // );
-    // const result = this.state.savedMovies.filter(
-    //   (item) => item.id !== favMovie.id
-    // );
-    // this.updateFavMovies(result);
-    // this.setState({ rating: userRating }, () => console.log(this.state.rating));
+    const { savedMovies } = this.state;
+    const movie = savedMovies[foundIndex];
+    savedMovies[foundIndex] = Object.assign({}, movie, { userRating: rating });
+    this.setState({
+      savedMovies: savedMovies,
+    });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ savedMovies: savedMovies })
+    );
+    console.log(this.state.savedMovies[foundIndex]);
+    console.log(Object.assign({}, movieId, { userRating: rating }));
+    console.log(rating);
+    console.log(movieId);
   };
 
   render() {
@@ -137,7 +137,7 @@ class App extends React.Component {
                   savedMovies={savedMovies}
                   deleteMovie={this.deleteMovie}
                   closeFavorite={this.closeFavorite}
-                  ratingHandler={this.ratingHandler}
+                  changeRating={this.changeRating}
                 />
               ) : null}
             </Container>
@@ -149,29 +149,6 @@ class App extends React.Component {
                 onInputChange={this.onUserChange}
                 onSubmit={this.handleAddUser}
               />
-              {/* <h2>Hello stranger!</h2>
-              <h4>What is your name?</h4>
-              <FormControl>
-                <InputLabel htmlFor="input-with-icon-adornment">
-                  Please enter your name
-                </InputLabel>
-                <Input
-                  id="input-with-icon-adornment"
-                  onChange={this.onUserChange}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <Button variant="contained" onClick={this.handleAddUser}>
-                Save
-              </Button> */}
-              {/* <TextField label="Name" onChange={this.onUserChange} />
-              <Button variant="contained" onClick={this.handleAddUser}>
-                Save
-              </Button> */}
             </Container>
           </React.Fragment>
         )}

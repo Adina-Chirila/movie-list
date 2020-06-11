@@ -10,15 +10,17 @@ import {
   Box,
   Paper,
 } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
+// import Rating from "@material-ui/lab/Rating";
 import styles from "./MovieCard.module.css";
 import posterPlaceholder from "../search/posterPlaceholder.jpg";
+import Rating from "./Rating";
+import { formatDate } from "../../utils/dateUtils";
 
 const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w400${imageUri}`;
 
 const MovieCard = (props) => {
-  const { movie, deleteMovie, rating, ratingHandler } = props;
-  // const [value, setValue] = React.useState(0);
+  const { movie, deleteMovie, changeRating } = props;
+
   return (
     <Paper className={styles.cardPaper}>
       <Card>
@@ -36,20 +38,18 @@ const MovieCard = (props) => {
             />
             <Typography variant="h5">{movie.original_title}</Typography>
             <Typography variant="body2" color="textSecondary">
-              Release date: {movie.release_date}
+              Release year: {formatDate(movie.release_date)}
             </Typography>
           </CardContent>
         </CardActionArea>
         <Box component="fieldset" mb={3} borderColor="transparent">
-          <Rating
-            name="simple-controlled"
-            defaultValue={0}
-            onChange={() => ratingHandler(movie)}
-
-            // onChange={(event, newValue) => {
-            //   setValue(newValue);
-            // }}
-          />
+          <div>
+            <Rating
+              userRating={props.movie.userRating}
+              changeRating={changeRating}
+              movieId={movie.id}
+            />
+          </div>
         </Box>
         <CardActions>
           <Button

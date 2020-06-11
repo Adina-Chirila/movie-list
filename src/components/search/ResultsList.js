@@ -4,10 +4,12 @@ import {
   GridListTile,
   GridListTileBar,
   IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import posterPlaceholder from "./posterPlaceholder.jpg";
 import styles from "./ResultsList.module.css";
+import { formatDate } from "../../utils/dateUtils";
 
 const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w400${imageUri}`;
 
@@ -26,14 +28,16 @@ const ResultsList = (props) => (
         />
         <GridListTileBar
           title={item.original_title}
-          subtitle={<span>Release date: {item.release_date}</span>}
+          subtitle={<span>Release year: {formatDate(item.release_date)}</span>}
           actionIcon={
-            <IconButton
-              aria-label={`add movie ${item.original_title} to favorites`}
-              onClick={() => props.onAdd(item)}
-            >
-              <FavoriteIcon className={styles.addFavorite} />
-            </IconButton>
+            <Tooltip title="Add to favorite">
+              <IconButton
+                aria-label={`add movie ${item.original_title} to favorites`}
+                onClick={() => props.onAdd(item)}
+              >
+                <FavoriteIcon className={styles.addFavorite} />
+              </IconButton>
+            </Tooltip>
           }
         ></GridListTileBar>
       </GridListTile>

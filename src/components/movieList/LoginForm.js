@@ -4,9 +4,12 @@ import {
   InputLabel,
   InputAdornment,
   FormControl,
+  Button,
+  Grid,
+  Paper,
+  // TextField,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Button, Grid, Paper } from "@material-ui/core";
 import styles from "./LoginForm.module.css";
 
 const LoginForm = (props) => {
@@ -22,12 +25,12 @@ const LoginForm = (props) => {
           <div className={styles.formTitleContainer}>
             <h2>Hello stranger!</h2>
           </div>
+
           <FormControl noValidate autoComplete="off">
             <InputLabel htmlFor="input-with-icon-adornment">
               Please enter your name
             </InputLabel>
             <Input
-              required
               autoFocus
               id="input-with-icon-adornment"
               onChange={props.onInputChange}
@@ -45,11 +48,6 @@ const LoginForm = (props) => {
           </div>
         </Paper>
       </Grid>
-
-      {/* <h2>Hello stranger!</h2>
-      <h4>What is your name?</h4>
-      <input onChange={this.props.inputChange} />
-      <button onClick={this.handleAddUser}>Save</button> */}
     </div>
   );
 };
