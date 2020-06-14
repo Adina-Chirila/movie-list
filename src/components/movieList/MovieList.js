@@ -10,8 +10,8 @@ class MovieList extends React.Component {
       <Paper className={styles.favoriteContainer} variant="outlined">
         <div className={styles.favoriteMenu}>
           <Typography variant="h3">Favorite movies</Typography>
-          <IconButton>
-            <CloseIcon onClick={this.props.closeFavorite} />
+          <IconButton onClick={this.props.closeFavorite}>
+            <CloseIcon />
           </IconButton>
         </div>
         <div className={styles.movieListContainer}>

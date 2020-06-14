@@ -23,7 +23,7 @@ const MovieCard = (props) => {
 
   return (
     <Paper className={styles.cardPaper}>
-      <Card>
+      <Card key={movie.id}>
         <CardActionArea>
           <CardContent>
             <CardMedia
@@ -36,7 +36,7 @@ const MovieCard = (props) => {
               }
               description="movie poster"
             />
-            <Typography variant="h5">{movie.original_title}</Typography>
+            <Typography variant="h6">{movie.original_title}</Typography>
             <Typography variant="body2" color="textSecondary">
               Release year: {formatDate(movie.release_date)}
             </Typography>

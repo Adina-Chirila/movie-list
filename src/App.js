@@ -12,7 +12,6 @@ class App extends React.Component {
     favoriteVisible: true,
     user: null,
     userName: "",
-    userNameError: "",
   };
 
   componentDidMount() {
@@ -30,6 +29,7 @@ class App extends React.Component {
   }
 
   onMovieAdd = (movie) => {
+    this.setState({ favoriteVisible: true });
     const movies = this.state.savedMovies;
     movies.push(movie);
 
@@ -64,6 +64,11 @@ class App extends React.Component {
 
   handleAddUser = (event) => {
     this.setState({ favoriteVisible: true });
+    if (this.state.userName === "" || this.state.userName === null) {
+      alert("Name is required.");
+      return;
+    }
+
     localStorage.setItem(
       "userDetails",
       JSON.stringify({
@@ -81,8 +86,6 @@ class App extends React.Component {
 
   onUserChange = (event) => {
     const { value } = event.target;
-    if (!value) {
-    }
     this.setState({
       userName: value,
     });
@@ -111,10 +114,10 @@ class App extends React.Component {
       "userData",
       JSON.stringify({ savedMovies: savedMovies })
     );
-    console.log(this.state.savedMovies[foundIndex]);
-    console.log(Object.assign({}, movieId, { userRating: rating }));
-    console.log(rating);
-    console.log(movieId);
+    // console.log(this.state.savedMovies[foundIndex]);
+    // console.log(Object.assign({}, movieId, { userRating: rating }));
+    // console.log(rating);
+    // console.log(movieId);
   };
 
   render() {
@@ -128,7 +131,7 @@ class App extends React.Component {
         />
         {user ? (
           <React.Fragment>
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
               <Search onMovieAdd={this.onMovieAdd} />
             </Container>
             <Container maxWidth="md">

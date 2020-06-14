@@ -5,6 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import ResultsList from "./ResultsList";
 import Settings from "../../config/Settings";
 import styles from "./Search.module.css";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 class Search extends Component {
   state = {
@@ -13,6 +14,7 @@ class Search extends Component {
     searchError: "",
   };
 
+  //Checking for validation search errors
   validateSearchTerm = () => {
     let isError = false;
     const errors = {
@@ -38,7 +40,7 @@ class Search extends Component {
       const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`;
 
       axios.get(url).then((response) => {
-        console.log(response.data.results);
+        // console.log(response.data.results);
         if (response.data.results.length < 1) {
           this.setState({
             searchError:
@@ -50,10 +52,10 @@ class Search extends Component {
         this.setState(
           {
             searchResults: response.data.results,
-          },
-          () => {
-            console.log(response.data.results);
           }
+          // () => {
+          //   console.log(response.data.results);
+          // }
         );
       });
 
@@ -91,19 +93,25 @@ class Search extends Component {
       <React.Fragment>
         <Container className={styles.container}>
           <TextField
+            className={styles.search}
             placeholder="Type the name of a movie..."
             label="Search"
             variant="outlined"
-            className={styles.search}
             value={this.state.searchTerm}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
             error={this.state.searchError ? this.validateSearchTerm : false}
             helperText={this.state.searchError}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton variant="outlined" onClick={this.handleSearch}>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <IconButton variant="outlined" onClick={this.handleSearch}>
-            <SearchIcon />
-          </IconButton>
         </Container>
         {this.state.searchResults.length > 0 && (
           <Container className={styles.results}>

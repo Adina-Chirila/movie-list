@@ -1,8 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Tooltip } from "@material-ui/core";
-
 import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+// import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import styles from "./Header.module.css";
@@ -18,7 +17,7 @@ const Header = (props) => {
 
         <div className={styles.accountActionContainer}>
           {props.user && (
-            <span className={styles.accountActionItem}>
+            <span className={styles.account}>
               Welcome, {props.user.userName.toUpperCase()}!
             </span>
           )}

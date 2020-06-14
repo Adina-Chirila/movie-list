@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./Rating.module.css";
 import StarIcon from "@material-ui/icons/Star";
 import { Icon } from "@material-ui/core";
+import { v4 as uuid } from "uuid";
 
 class Rating extends Component {
   constructor(props) {
