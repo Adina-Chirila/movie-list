@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Tooltip } from "@material-ui/core";
 import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
 // import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+// import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import styles from "./Header.module.css";
 
@@ -27,12 +27,12 @@ const Header = (props) => {
               {/* <Tooltip title="Account">
                 <AccountCircleIcon className={styles.accountActionItem} />
               </Tooltip> */}
-              <Tooltip title="Favorite">
+              {/* <Tooltip title="Favorite">
                 <FavoriteIcon
                   className={styles.accountActionItem}
                   onClick={props.closeFavorite}
                 />
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title="Logout">
                 <ExitToAppIcon
                   className={styles.accountActionItem}

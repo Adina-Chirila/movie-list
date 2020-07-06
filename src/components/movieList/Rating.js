@@ -22,10 +22,11 @@ class Rating extends Component {
     const { changeRating, userRating = 0, movieId } = this.props;
 
     return (
-      <div>
+      <div className={styles.ratingContainer}>
         {ratings.map((item) => {
           return (
             <Icon
+              key={uuid()}
               onClick={() => changeRating(item, movieId)}
               className={styles.icon}
             >
