@@ -5,6 +5,7 @@ import { Container } from "@material-ui/core";
 import MovieList from "./components/movieList/MovieList";
 import Search from "./components/search/Search";
 import LoginForm from "./components/movieList/LoginForm";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   state = {
@@ -123,39 +124,47 @@ class App extends React.Component {
   render() {
     const { savedMovies, user } = this.state;
     return (
-      <div className="App">
-        <Header
-          user={user}
-          onLogout={this.logout}
-          closeFavorite={this.closeFavorite}
-        />
-        {user ? (
-          <React.Fragment>
-            <Container maxWidth="lg">
-              <Search onMovieAdd={this.onMovieAdd} />
-            </Container>
-            <Container maxWidth="md">
-              {this.state.favoriteVisible ? (
-                <MovieList
-                  savedMovies={savedMovies}
-                  deleteMovie={this.deleteMovie}
-                  closeFavorite={this.closeFavorite}
-                  changeRating={this.changeRating}
+      <Router>
+        <div className="App">
+          <Header
+            user={user}
+            onLogout={this.logout}
+            closeFavorite={this.closeFavorite}
+          />
+          {user ? (
+            <Switch>
+              <React.Fragment>
+                <Route path="/" exact>
+                  <Container maxWidth="lg">
+                    <Search onMovieAdd={this.onMovieAdd} />
+                  </Container>
+                </Route>
+                <Route path="/favorites">
+                  <Container maxWidth="md">
+                    {this.state.favoriteVisible ? (
+                      <MovieList
+                        savedMovies={savedMovies}
+                        deleteMovie={this.deleteMovie}
+                        closeFavorite={this.closeFavorite}
+                        changeRating={this.changeRating}
+                      />
+                    ) : null}
+                  </Container>
+                </Route>
+              </React.Fragment>
+            </Switch>
+          ) : (
+            <React.Fragment>
+              <Container maxWidth="xl">
+                <LoginForm
+                  onInputChange={this.onUserChange}
+                  onSubmit={this.handleAddUser}
                 />
-              ) : null}
-            </Container>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Container maxWidth="xl">
-              <LoginForm
-                onInputChange={this.onUserChange}
-                onSubmit={this.handleAddUser}
-              />
-            </Container>
-          </React.Fragment>
-        )}
-      </div>
+              </Container>
+            </React.Fragment>
+          )}
+        </div>
+      </Router>
     );
   }
 }
