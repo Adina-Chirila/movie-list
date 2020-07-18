@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styles from "./Rating.module.css";
 import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Icon } from "@material-ui/core";
+import { v4 as uuid } from "uuid";
 
 class Rating extends Component {
   constructor(props) {
@@ -22,10 +22,11 @@ class Rating extends Component {
     const { changeRating, userRating = 0, movieId } = this.props;
 
     return (
-      <div>
+      <div className={styles.ratingContainer}>
         {ratings.map((item) => {
           return (
             <Icon
+              key={uuid()}
               onClick={() => changeRating(item, movieId)}
               className={styles.icon}
             >
@@ -41,10 +42,6 @@ class Rating extends Component {
                 onMouseLeave={() => {
                   this.onHover(null);
                 }}
-                // ratingValue <= rating
-
-                //ratingValue = item
-                //rating = userRating
               />
             </Icon>
           );

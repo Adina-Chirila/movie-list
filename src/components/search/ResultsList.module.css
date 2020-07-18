@@ -1,3 +1,7 @@
-.poster {
-  width: 120px;
+.addFavorite {
+  color: rgb(199, 199, 199);
+}
+
+.addFavorite:hover {
+  color: red;
 }

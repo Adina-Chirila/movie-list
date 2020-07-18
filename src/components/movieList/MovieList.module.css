@@ -1,0 +1,19 @@
+.movieListContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.favoriteMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.favoriteContainer {
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin-top: 20px;
+}

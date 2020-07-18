@@ -1,9 +1,13 @@
 div .container {
-  margin: 16px 0;
-  display: flex;
+  margin: 20px 0;
 }
 
 div .search {
   width: 100%;
   margin-right: 8px;
+}
+
+.ratingContainer {
+  border: 1px solid red;
+  margin-left: 20px;
 }

@@ -11,3 +11,7 @@
   cursor: pointer;
   transition: color 200ms;
 }
+
+.ratingContainer {
+  margin-left: 12px;
+}

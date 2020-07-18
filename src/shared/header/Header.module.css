@@ -1,5 +1,43 @@
-.identityIcon {
-  letter-spacing: 2px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accountActionContainer {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid red; */
+}
+
+.accountActionItem {
+  margin: 0 15px;
+  cursor: pointer;
+  /* border: 1px solid red; */
+  text-align: center;
+  color: white;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account {
+  margin-right: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+  .accountActionContainer {
+    padding-top: 10px;
+  }
+  .accountActionItem {
+    margin: 0 10px;
+  }
 }
 
 .header {

@@ -1,22 +1,19 @@
 import React from "react";
+import "./App.css";
 import Header from "./shared/header/Header";
-import { Grid, Container, TextField, Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import MovieList from "./components/movieList/MovieList";
 import Search from "./components/search/Search";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import LoginForm from "./components/movieList/LoginForm";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
   state = {
     savedMovies: [],
+    // favoriteVisible: true,
     user: null,
     userName: "",
-    showSecret: false,
+    loginError: false,
   };
 
   componentDidMount() {
@@ -44,6 +41,7 @@ class App extends React.Component {
   }
 
   onMovieAdd = (movie) => {
+    // this.setState({ favoriteVisible: true });
     const movies = this.state.savedMovies;
     movies.push(movie);
 
@@ -59,7 +57,29 @@ class App extends React.Component {
     });
   };
 
+  updateFavMovies = (newMovies) => {
+    this.setState({ savedMovies: newMovies });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        savedMovies: newMovies,
+      })
+    );
+  };
+
+  deleteMovie = (favMovie) => {
+    const result = this.state.savedMovies.filter(
+      (item) => item.id !== favMovie.id
+    );
+    this.updateFavMovies(result);
+  };
+
   handleAddUser = (event) => {
+    if (!this.state.userName) {
+      this.setState({ loginError: true });
+      return;
+    }
+
     localStorage.setItem(
       "userDetails",
       JSON.stringify({
@@ -75,11 +95,20 @@ class App extends React.Component {
     });
   };
 
+  closeLoginErrorAlert = () => {
+    this.setState({ loginError: false });
+  };
+
   onUserChange = (event) => {
     const { value } = event.target;
     this.setState({
       userName: value,
     });
+  };
+
+  logout = () => {
+    this.setState({ user: null });
+    localStorage.removeItem("userDetails");
   };
 
   changeRating = (rating, movieId) => {
@@ -96,13 +125,6 @@ class App extends React.Component {
       "userData",
       JSON.stringify({ savedMovies: savedMovies })
     );
-    console.log(this.state.savedMovies[foundIndex]);
-    console.log(Object.assign({}, movieId, { userRating: rating }));
-  };
-
-  logout = () => {
-    this.setState({ user: null });
-    localStorage.removeItem("userDetails");
   };
 
   render() {
@@ -110,37 +132,51 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Header user={user} onLogout={this.logout} />
+          <Header
+            user={user}
+            onLogout={this.logout}
+            // closeFavorite={this.closeFavorite}
+          />
           {user ? (
             <Switch>
-              <Route path="/" exact>
-                <React.Fragment>
-                  <Container maxWidth="md">
+              <React.Fragment>
+                <Route path="/" exact>
+                  <Container maxWidth="lg">
                     <Search onMovieAdd={this.onMovieAdd} />
                   </Container>
-                  {this.state.showSecret && <h2>This is interactive </h2>}
+                </Route>
+                <Route path="/favorites">
                   <Container maxWidth="md">
+                    {/* {this.state.favoriteVisible ? (
+                      <MovieList
+                        savedMovies={savedMovies}
+                        deleteMovie={this.deleteMovie}
+                        closeFavorite={this.closeFavorite}
+                        changeRating={this.changeRating}
+                      />
+                    ) : null} */}
+
                     <MovieList
                       savedMovies={savedMovies}
+                      deleteMovie={this.deleteMovie}
+                      // closeFavorite={this.closeFavorite}
                       changeRating={this.changeRating}
                     />
                   </Container>
-                </React.Fragment>
-              </Route>
-              <Route path="/Settings">Hello {user.userName}</Route>
-              <Route path="*">
-                <Redirect to="/" />
-              </Route>
+                </Route>
+              </React.Fragment>
             </Switch>
           ) : (
-            <Container maxWidth="md">
-              <h2>Hello stranger!</h2>
-              <h4>What is your name?</h4>
-              <TextField label="Name" onChange={this.onUserChange} />
-              <Button variant="contained" onClick={this.handleAddUser}>
-                Save
-              </Button>
-            </Container>
+            <React.Fragment>
+              <Container maxWidth="xl">
+                <LoginForm
+                  onInputChange={this.onUserChange}
+                  onSubmit={this.handleAddUser}
+                  loginError={this.state.loginError}
+                  closeLoginErrorAlert={this.closeLoginErrorAlert}
+                />
+              </Container>
+            </React.Fragment>
           )}
         </div>
       </Router>

@@ -1,33 +1,58 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { TextField, Button, Container } from "@material-ui/core";
+import { TextField, IconButton, Container } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import ResultsList from "./ResultsList";
 import Settings from "../../config/Settings";
 import styles from "./Search.module.css";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Swal from "sweetalert2";
 
 class Search extends Component {
   state = {
     searchResults: [],
     searchTerm: "",
+    searchError: "",
+  };
+
+  validateSearchTerm = () => {
+    let isError = false;
+    const errors = {
+      searchError: "",
+    };
+    if (this.state.searchTerm.length < 1) {
+      isError = true;
+      errors.searchError =
+        "Movie name is empty. Please enter a valid movie name";
+    }
+    this.setState({
+      ...this.state,
+      ...errors,
+    });
+    return isError;
   };
 
   handleSearch = () => {
-    console.log(this.state.searchTerm);
-    const { API_URL, API_KEY } = Settings;
-    // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=Terminator
-    const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`;
+    const searchErr = this.validateSearchTerm();
+    if (!searchErr) {
+      const { API_URL, API_KEY } = Settings;
+      const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`;
 
-    axios.get(url).then((response) => {
-      this.setState(
-        {
-          searchResults: response.data.results,
-        },
-        () => {
-          console.log(this.state.searchResults);
+      axios.get(url).then((response) => {
+        if (response.data.results.length < 1) {
+          this.setState({
+            searchError:
+              "Your search didn't return any results. Please try again.",
+          });
         }
-      );
-    });
+        this.setState({
+          searchResults: response.data.results,
+        });
+      });
+      this.setState({
+        searchTerm: "",
+      });
+    }
   };
 
   handleChange = (event) => {
@@ -42,6 +67,21 @@ class Search extends Component {
       searchTerm: "",
     });
     this.props.onMovieAdd(movie);
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Movie added to favorites list",
+      confirmButtonColor: "#3F51B5",
+    });
+  };
+
+  handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      this.setState({
+        searchTerm: "",
+      });
+      this.handleSearch();
+    }
   };
 
   render() {
@@ -49,21 +89,25 @@ class Search extends Component {
       <React.Fragment>
         <Container className={styles.container}>
           <TextField
+            className={styles.search}
             placeholder="Type the name of a movie..."
             label="Search"
             variant="outlined"
-            className={styles.search}
             value={this.state.searchTerm}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+            error={this.state.searchError ? this.validateSearchTerm : false}
+            helperText={this.state.searchError}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton variant="outlined" onClick={this.handleSearch}>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <Button
-            variant="outlined"
-            color="normal"
-            startIcon={<SearchIcon />}
-            onClick={this.handleSearch}
-          >
-            Search
-          </Button>
         </Container>
         {this.state.searchResults.length > 0 && (
           <Container className={styles.results}>

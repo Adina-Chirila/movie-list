@@ -1,0 +1,7 @@
+.cardPaper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 250px;
+  margin: 10px 0;
+}
