@@ -5,14 +5,15 @@ import { Container } from "@material-ui/core";
 import MovieList from "./components/movieList/MovieList";
 import Search from "./components/search/Search";
 import LoginForm from "./components/movieList/LoginForm";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
   state = {
     savedMovies: [],
-    favoriteVisible: true,
+    // favoriteVisible: true,
     user: null,
     userName: "",
+    loginError: false,
   };
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class App extends React.Component {
   }
 
   onMovieAdd = (movie) => {
-    this.setState({ favoriteVisible: true });
+    // this.setState({ favoriteVisible: true });
     const movies = this.state.savedMovies;
     movies.push(movie);
 
@@ -64,9 +65,8 @@ class App extends React.Component {
   };
 
   handleAddUser = (event) => {
-    this.setState({ favoriteVisible: true });
-    if (this.state.userName === "" || this.state.userName === null) {
-      alert("Name is required.");
+    if (!this.state.userName) {
+      this.setState({ loginError: true });
       return;
     }
 
@@ -85,6 +85,10 @@ class App extends React.Component {
     });
   };
 
+  closeLoginErrorAlert = () => {
+    this.setState({ loginError: false });
+  };
+
   onUserChange = (event) => {
     const { value } = event.target;
     this.setState({
@@ -95,10 +99,6 @@ class App extends React.Component {
   logout = () => {
     this.setState({ user: null });
     localStorage.removeItem("userDetails");
-  };
-
-  closeFavorite = () => {
-    this.setState({ favoriteVisible: !this.state.favoriteVisible });
   };
 
   changeRating = (rating, movieId) => {
@@ -115,10 +115,6 @@ class App extends React.Component {
       "userData",
       JSON.stringify({ savedMovies: savedMovies })
     );
-    // console.log(this.state.savedMovies[foundIndex]);
-    // console.log(Object.assign({}, movieId, { userRating: rating }));
-    // console.log(rating);
-    // console.log(movieId);
   };
 
   render() {
@@ -129,7 +125,7 @@ class App extends React.Component {
           <Header
             user={user}
             onLogout={this.logout}
-            closeFavorite={this.closeFavorite}
+            // closeFavorite={this.closeFavorite}
           />
           {user ? (
             <Switch>
@@ -141,14 +137,21 @@ class App extends React.Component {
                 </Route>
                 <Route path="/favorites">
                   <Container maxWidth="md">
-                    {this.state.favoriteVisible ? (
+                    {/* {this.state.favoriteVisible ? (
                       <MovieList
                         savedMovies={savedMovies}
                         deleteMovie={this.deleteMovie}
                         closeFavorite={this.closeFavorite}
                         changeRating={this.changeRating}
                       />
-                    ) : null}
+                    ) : null} */}
+
+                    <MovieList
+                      savedMovies={savedMovies}
+                      deleteMovie={this.deleteMovie}
+                      // closeFavorite={this.closeFavorite}
+                      changeRating={this.changeRating}
+                    />
                   </Container>
                 </Route>
               </React.Fragment>
@@ -159,6 +162,8 @@ class App extends React.Component {
                 <LoginForm
                   onInputChange={this.onUserChange}
                   onSubmit={this.handleAddUser}
+                  loginError={this.state.loginError}
+                  closeLoginErrorAlert={this.closeLoginErrorAlert}
                 />
               </Container>
             </React.Fragment>

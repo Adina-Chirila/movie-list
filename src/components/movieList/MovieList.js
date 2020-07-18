@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography, Paper, IconButton } from "@material-ui/core";
+import { Typography, Paper } from "@material-ui/core";
 import MovieCard from "./MovieCard";
-import CloseIcon from "@material-ui/icons/Close";
+
 import styles from "./MovieList.module.css";
 
 class MovieList extends React.Component {
@@ -10,9 +10,6 @@ class MovieList extends React.Component {
       <Paper className={styles.favoriteContainer} variant="outlined">
         <div className={styles.favoriteMenu}>
           <Typography variant="h3">Favorite movies</Typography>
-          <IconButton onClick={this.props.closeFavorite}>
-            <CloseIcon />
-          </IconButton>
         </div>
         <div className={styles.movieListContainer}>
           {this.props.savedMovies.length > 0 ? (

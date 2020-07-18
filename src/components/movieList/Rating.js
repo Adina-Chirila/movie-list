@@ -42,10 +42,6 @@ class Rating extends Component {
                 onMouseLeave={() => {
                   this.onHover(null);
                 }}
-                // ratingValue <= rating
-
-                //ratingValue = item
-                //rating = userRating
               />
             </Icon>
           );

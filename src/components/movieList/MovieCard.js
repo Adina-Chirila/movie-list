@@ -10,7 +10,7 @@ import {
   Box,
   Paper,
 } from "@material-ui/core";
-// import Rating from "@material-ui/lab/Rating";
+
 import styles from "./MovieCard.module.css";
 import posterPlaceholder from "../search/posterPlaceholder.jpg";
 import Rating from "./Rating";

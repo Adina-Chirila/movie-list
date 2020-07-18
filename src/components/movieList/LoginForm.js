@@ -7,14 +7,18 @@ import {
   Button,
   Grid,
   Paper,
-  // TextField,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import styles from "./LoginForm.module.css";
+import LoginErrorAlert from "./LoginErrorAlert";
 
 const LoginForm = (props) => {
   return (
     <div className={styles.form}>
+      <LoginErrorAlert
+        loginError={props.loginError}
+        closeLoginErrorAlert={props.closeLoginErrorAlert}
+      />
       <Grid
         container
         alignContent="center"

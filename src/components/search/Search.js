@@ -6,6 +6,7 @@ import ResultsList from "./ResultsList";
 import Settings from "../../config/Settings";
 import styles from "./Search.module.css";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Swal from "sweetalert2";
 
 class Search extends Component {
   state = {
@@ -14,7 +15,6 @@ class Search extends Component {
     searchError: "",
   };
 
-  //Checking for validation search errors
   validateSearchTerm = () => {
     let isError = false;
     const errors = {
@@ -36,29 +36,19 @@ class Search extends Component {
     const searchErr = this.validateSearchTerm();
     if (!searchErr) {
       const { API_URL, API_KEY } = Settings;
-      // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=Terminator
       const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`;
 
       axios.get(url).then((response) => {
-        // console.log(response.data.results);
         if (response.data.results.length < 1) {
           this.setState({
             searchError:
               "Your search didn't return any results. Please try again.",
           });
-          // alert("Empty array");
         }
-
-        this.setState(
-          {
-            searchResults: response.data.results,
-          }
-          // () => {
-          //   console.log(response.data.results);
-          // }
-        );
+        this.setState({
+          searchResults: response.data.results,
+        });
       });
-
       this.setState({
         searchTerm: "",
       });
@@ -77,6 +67,12 @@ class Search extends Component {
       searchTerm: "",
     });
     this.props.onMovieAdd(movie);
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Movie added to favorites list",
+      confirmButtonColor: "#3F51B5",
+    });
   };
 
   handleKeyPress = (event) => {

@@ -4,20 +4,26 @@
   align-items: center;
 }
 
+.accountActionContainer {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid red; */
+}
+
 .accountActionItem {
   margin: 0 15px;
   cursor: pointer;
+  /* border: 1px solid red; */
   text-align: center;
+  color: white;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .account {
   margin-right: 15px;
-}
-
-.accountActionContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
