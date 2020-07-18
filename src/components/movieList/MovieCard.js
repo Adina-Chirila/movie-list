@@ -14,7 +14,6 @@ import Rating from "./Rating";
 
 import styles from "./MovieCard.module.css";
 import posterPlaceholder from "../search/posterPlaceholder.jpg";
-import Rating from "./Rating";
 import { formatDate } from "../../utils/dateUtils";
 
 const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w400${imageUri}`;

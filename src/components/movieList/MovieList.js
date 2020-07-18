@@ -1,7 +1,6 @@
 import React from "react";
 import { Typography, Paper } from "@material-ui/core";
 import MovieCard from "./MovieCard";
-
 import styles from "./MovieList.module.css";
 
 class MovieList extends React.Component {

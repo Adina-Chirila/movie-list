@@ -6,11 +6,11 @@ import MovieList from "./components/movieList/MovieList";
 import Search from "./components/search/Search";
 import LoginForm from "./components/movieList/LoginForm";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Swal from "sweetalert2";
 
 class App extends React.Component {
   state = {
     savedMovies: [],
-    // favoriteVisible: true,
     user: null,
     userName: "",
     loginError: false,
@@ -24,8 +24,6 @@ class App extends React.Component {
       this.setState({
         user: parsedUser,
       });
-    } else {
-      // handle redirect to login?
     }
 
     if (savedMovies) {
@@ -41,7 +39,23 @@ class App extends React.Component {
   }
 
   onMovieAdd = (movie) => {
-    // this.setState({ favoriteVisible: true });
+    const movies = this.state.savedMovies;
+    const isMovieAlreadyAdded = movies.find(
+      (savedMovie) => savedMovie.id === movie.id
+    );
+    if (isMovieAlreadyAdded) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please select another movie",
+        text: "Movie already exists in favorites list",
+        confirmButtonColor: "#3F51B5",
+      });
+    } else {
+      this.saveMovie(movie);
+    }
+  };
+
+  saveMovie = (movie) => {
     const movies = this.state.savedMovies;
     movies.push(movie);
 
@@ -54,6 +68,12 @@ class App extends React.Component {
 
     this.setState({
       savedMovies: movies,
+    });
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Movie added to favorites list",
+      confirmButtonColor: "#3F51B5",
     });
   };
 
@@ -132,11 +152,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Header
-            user={user}
-            onLogout={this.logout}
-            // closeFavorite={this.closeFavorite}
-          />
+          <Header user={user} onLogout={this.logout} />
           {user ? (
             <Switch>
               <React.Fragment>
@@ -147,19 +163,9 @@ class App extends React.Component {
                 </Route>
                 <Route path="/favorites">
                   <Container maxWidth="md">
-                    {/* {this.state.favoriteVisible ? (
-                      <MovieList
-                        savedMovies={savedMovies}
-                        deleteMovie={this.deleteMovie}
-                        closeFavorite={this.closeFavorite}
-                        changeRating={this.changeRating}
-                      />
-                    ) : null} */}
-
                     <MovieList
                       savedMovies={savedMovies}
                       deleteMovie={this.deleteMovie}
-                      // closeFavorite={this.closeFavorite}
                       changeRating={this.changeRating}
                     />
                   </Container>

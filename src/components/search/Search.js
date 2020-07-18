@@ -3,10 +3,9 @@ import axios from "axios";
 import { TextField, IconButton, Container } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import ResultsList from "./ResultsList";
-import Settings from "../../config/Settings";
+import Settings from "../../config/Settings.example";
 import styles from "./Search.module.css";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Swal from "sweetalert2";
 
 class Search extends Component {
   state = {
@@ -67,12 +66,6 @@ class Search extends Component {
       searchTerm: "",
     });
     this.props.onMovieAdd(movie);
-    Swal.fire({
-      icon: "success",
-      title: "Success",
-      text: "Movie added to favorites list",
-      confirmButtonColor: "#3F51B5",
-    });
   };
 
   handleKeyPress = (event) => {
